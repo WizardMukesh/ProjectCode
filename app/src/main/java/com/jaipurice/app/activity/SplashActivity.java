@@ -5,7 +5,8 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.jaipurice.app.jaipurice.R;
+import com.jaipurice.app.R;
+
 
 public class SplashActivity extends AppCompatActivity {
 

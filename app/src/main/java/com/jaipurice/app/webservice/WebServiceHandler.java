@@ -55,6 +55,7 @@ public class WebServiceHandler {
     }
 
     public void post(String url, FormBody.Builder builder) throws IOException {
+        progressDialog.show();
         if (MyApplication.isConnectingToInternet()) {
             Log.e("POSTURL", url);
             RequestBody requestbody = builder.build();
@@ -89,6 +90,7 @@ public class WebServiceHandler {
     }
 
     public void get(String url) throws IOException {
+        progressDialog.show();
         Log.e("GETURL",url);
         if (MyApplication.isConnectingToInternet()) {
             request =  new Request.Builder()

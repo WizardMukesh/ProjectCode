@@ -3,6 +3,7 @@ package com.jaipurice.app.activity;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.jaipurice.app.jaipurice.R;
+import com.jaipurice.app.R;
 import com.jaipurice.app.utils.Constants;
 import com.jaipurice.app.utils.PermissionResultCallback;
 import com.jaipurice.app.utils.PermissionUtils;
@@ -34,27 +35,33 @@ public class LoginActivity extends AppCompatActivity implements
     private String TAG = this.getClass().getName();
     private ArrayList<String> permissions=new ArrayList<>();
     private PermissionUtils permissionUtils;
+    private boolean arePermissionsGranted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        permissionUtils=new PermissionUtils(getApplicationContext());
+        permissionUtils=new PermissionUtils(LoginActivity.this);
 
         userName = (EditText)findViewById(R.id.editUserName);
         userPassword = (EditText)findViewById(R.id.editPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
+
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions.add(Manifest.permission.BLUETOOTH);
-        permissions.add(Manifest.permission.BLUETOOTH_ADMIN);
+
+        permissionUtils.check_permission(permissions,"App Should Have These Permissions",1);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = userName.getText().toString();
-                userpassword = userPassword.getText().toString();
-                String url = Constants.URL_LOGIN+"?username="+username+"&password="+userpassword+"";
-                loginUser(url);
+                if(arePermissionsGranted) {
+                    username = userName.getText().toString();
+                    userpassword = userPassword.getText().toString();
+                    String url = Constants.URL_LOGIN + "?username=" + username + "&password=" + userpassword + "";
+                    loginUser(url);
+                }
+                else
+                    permissionUtils.check_permission(permissions,"App Should Have These Permissions",1);
             }
         });
     }
@@ -75,22 +82,33 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void PermissionGranted(int request_code) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
 
+        // redirects to utils
+
+        permissionUtils.onRequestPermissionsResult(requestCode,permissions,grantResults);
+
+    }
+
+    @Override
+    public void PermissionGranted(int request_code) {
+        Log.e(TAG,"Granted");
+        arePermissionsGranted = true;
     }
 
     @Override
     public void PartialPermissionGranted(int request_code, ArrayList<String> granted_permissions) {
-
+        Log.e(TAG,"Partially Granted");
     }
 
     @Override
     public void PermissionDenied(int request_code) {
-
+        Log.e(TAG,"Denied");
     }
 
     @Override
     public void NeverAskAgain(int request_code) {
-
+        Log.e(TAG,"NeverAsk");
     }
 }
