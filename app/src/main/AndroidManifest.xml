@@ -15,18 +15,23 @@
         android:supportsRtl="true"
         android:name=".application.MyApplication"
         android:theme="@style/AppTheme">
-    <activity android:name="com.jaipurice.app.activity.SplashActivity" android:theme="@style/AppTheme.FullScreenNoStatus"
-        >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name="com.jaipurice.app.activity.SplashActivity" android:theme="@style/AppTheme.FullScreenNoStatus"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-    </activity>
-    <activity android:name="com.jaipurice.app.activity.LoginActivity" android:theme="@style/AppTheme.FullScreenNoStatus"></activity>
-    <activity android:name="com.jaipurice.app.activity.MainActivity"/>
+        </activity>
+        <activity android:name="com.jaipurice.app.activity.LoginActivity"
+            android:theme="@style/AppTheme.FullScreenNoStatus"/>
 
+        <activity android:name="com.jaipurice.app.activity.MainActivity"/>
+
+        <activity android:name=".activity.DeviceListActivity"/>
+
+        <activity android:name=".activity.ConnectionActivity"/>
     </application>
 
 </manifest>
