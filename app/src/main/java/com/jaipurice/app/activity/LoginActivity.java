@@ -2,6 +2,7 @@ package com.jaipurice.app.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -59,6 +60,14 @@ public class LoginActivity extends AppCompatActivity implements
                     userpassword = userPassword.getText().toString();
                     String url = Constants.URL_LOGIN + "?username=" + username + "&password=" + userpassword + "";
                     loginUser(url);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(LoginActivity.this,CustomerActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 else
                     permissionUtils.check_permission(permissions,"App Should Have These Permissions",1);
