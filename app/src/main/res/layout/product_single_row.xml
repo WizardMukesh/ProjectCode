@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="160dp"
+        android:layout_height="235dp"
+        android:layout_margin="10dp"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                card_view:cardBackgroundColor="#fff"
+                android:layout_weight="0.45"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="5dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/product_thumb"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:src="@mipmap/ic_launcher"
+                        />
+
+<!--
+                    <RelativeLayout
+                        android:id="@+id/layout_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            android:src="@color/colorAccent_new" />
+                        <TextView
+                            android:id="@+id/text_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2%"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent_new"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true" />
+                    </RelativeLayout>
+-->
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.15"
+                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_margin="3dp"
+                android:textSize="12sp"
+                android:text="fs"
+                android:gravity="center"
+                android:layout_below="@+id/card_view"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/product_name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="0.1">
+                    <TextView
+                        android:id="@+id/product_price_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="null"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical|right"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" ₹"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/></LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_weight="0.2">
+                <LinearLayout
+                    android:id="@+id/btn_decrease"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.23">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/negative"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+                    <TextView
+                        android:id="@+id/text_quantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="1"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/btn_increase"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.23">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/positive"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_weight="0.38">
+                    <RelativeLayout
+                        android:id="@+id/layout_add_to_cart"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@color/colorPrimary" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/ic_cart"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

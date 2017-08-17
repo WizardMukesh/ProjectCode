@@ -13,11 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jaipurice.app.R;
+import com.jaipurice.app.application.MyApplication;
 import com.jaipurice.app.utils.Constants;
 import com.jaipurice.app.utils.PermissionResultCallback;
 import com.jaipurice.app.utils.PermissionUtils;
+import com.jaipurice.app.utils.SharedPreferenceUtility;
 import com.jaipurice.app.webservice.WebServiceHandler;
 import com.jaipurice.app.webservice.WebServiceListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,13 +66,6 @@ public class LoginActivity extends AppCompatActivity implements
                     String url = Constants.URL_LOGIN + "?username=" + username + "&password=" + userpassword + "";
                     loginUser(url);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(LoginActivity.this,CustomerActivity.class);
-                            startActivity(intent);
-                        }
-                    });
                 }
                 else
                     permissionUtils.check_permission(permissions,"App Should Have These Permissions",1);
@@ -79,8 +77,33 @@ public class LoginActivity extends AppCompatActivity implements
         WebServiceHandler webServiceHandler = new WebServiceHandler(LoginActivity.this);
         webServiceHandler.serviceListener  =new WebServiceListener() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(final String response) {
                 Log.e(TAG,response);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.optInt("status_code")==1) {
+                                JSONObject jsonObject1 = jsonObject.optJSONArray("details").getJSONObject(0);
+
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_IS_LOGGED_IN,true);
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_EMP_ID,jsonObject1.optString("id"));
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_USER_NAME,jsonObject1.optString("username"));
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_USER_FULL_NAME,jsonObject1.optString("name"));
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_TOKEN,jsonObject1.optString("token"));
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_CONTACT_NUM,jsonObject1.optString("contact_number"));
+                                SharedPreferenceUtility.getInstance().save(Constants.PREF_PHOTO_URL,jsonObject1.optString("photo"));
+
+                                Intent intent = new Intent(LoginActivity.this, ConnectionActivity.class);
+                                startActivity(intent);
+                            }
+                            else
+                                MyApplication.alertDialog(LoginActivity.this,jsonObject.optString("status_description"),"Login Error");
+
+                        }catch (JSONException e){e.printStackTrace();}
+                    }
+                });
             }
         };
         try {
@@ -119,5 +142,11 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void NeverAskAgain(int request_code) {
         Log.e(TAG,"NeverAsk");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
     }
 }

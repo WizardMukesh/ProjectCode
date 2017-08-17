@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.jaipurice.app.R;
+import com.jaipurice.app.utils.Constants;
+import com.jaipurice.app.utils.SharedPreferenceUtility;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,9 +24,16 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if(SharedPreferenceUtility.getInstance().get(Constants.PREF_IS_LOGGED_IN,false)) {
+                    Intent intent = new Intent(SplashActivity.this, ConnectionActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }.start();
 

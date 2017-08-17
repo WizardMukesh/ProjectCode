@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
+import com.jaipurice.app.activity.LoginActivity;
 import com.jaipurice.app.application.MyApplication;
 
 import java.io.IOException;
@@ -85,7 +86,7 @@ public class WebServiceHandler {
 
             });
         }else{
-            MyApplication.showInternetUnavailableDialog((Activity) context);
+            MyApplication.alertDialog((Activity) context,"No Internet Connection Found!","Network Error");
         }
     }
 
@@ -113,7 +114,7 @@ public class WebServiceHandler {
                 }
             });
         }else{
-            MyApplication.showInternetUnavailableDialog((Activity) context);
+            MyApplication.alertDialog((Activity) context,"No Internet Connection Found!","Network Error");
         }
     }
 

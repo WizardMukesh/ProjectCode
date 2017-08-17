@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="Profile"
+        android:visible="true"
+        android:icon="@drawable/ic_profile"
+        appcompat:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Logout"
+        android:visible="true"
+        android:icon="@drawable/ic_logout"
+        appcompat:showAsAction="always"/>
+
+
+</menu>

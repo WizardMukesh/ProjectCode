@@ -12,7 +12,9 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jaipurice.app.R;
@@ -34,7 +36,7 @@ public class ConnectionActivity extends AppCompatActivity implements Runnable {
     private UUID applicationUUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog mBluetoothConnectProgressDialog;
-    private BluetoothSocket mBluetoothSocket;
+    public static BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
 
     @Override
@@ -43,6 +45,14 @@ public class ConnectionActivity extends AppCompatActivity implements Runnable {
         setContentView(R.layout.activity_connection);
 
         scan();
+
+        ((ImageView) findViewById(R.id.image)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ConnectionActivity.this, CustomerActivity.class));
+                finish();
+            }
+        });
     }
 
     private void scan() {

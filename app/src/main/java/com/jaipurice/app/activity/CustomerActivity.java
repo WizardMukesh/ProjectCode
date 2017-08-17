@@ -1,15 +1,21 @@
 package com.jaipurice.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
-import com.jaipurice.app.Model.CustomerModel;
+import com.jaipurice.app.adpaters.ProductAdapter;
+import com.jaipurice.app.model.CustomerModel;
 import com.jaipurice.app.R;
 import com.jaipurice.app.adpaters.CustomerrAdapter;
+import com.jaipurice.app.model.Product;
 import com.jaipurice.app.utils.Constants;
+import com.jaipurice.app.utils.SharedPreferenceUtility;
 import com.jaipurice.app.webservice.WebServiceHandler;
 import com.jaipurice.app.webservice.WebServiceListener;
 
@@ -24,24 +30,40 @@ import java.util.ArrayList;
  * Created by Nishant on 8/12/2017.
  */
 
-public class CustomerActivity extends AppCompatActivity {
+public class CustomerActivity extends BaseActivity implements SearchView.OnQueryTextListener {
     private ListView customerList;
     private ArrayList<CustomerModel> arrayCusList = new ArrayList<>();
     CustomerrAdapter customerrAdapter;
     private String TAG = this.getClass().getName();
+    private SearchView mSearchView;
+    private ArrayList<CustomerModel>filteredList;
+    public static String customerId="1";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.customer_row);
+
 
         customerList = (ListView) findViewById(R.id.customer_list);
+        mSearchView = (SearchView) findViewById(R.id.search_view);
 
+        customerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("name",filteredList.get(position).getCustomerName());
+                customerId = filteredList.get(position).getCustomerID();
+                startActivity(new Intent(CustomerActivity.this, ProductActivity.class));
+            }
+        });
         customerList();
-
     }
 
-//---------------------------------show customer list------------------------------------------------------
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.customer_activity;
+    }
+
+    //---------------------------------show customer list------------------------------------------------------
     public void customerList(){
         WebServiceHandler webServiceHandler = new WebServiceHandler(CustomerActivity.this);
         webServiceHandler.serviceListener  =new WebServiceListener() {
@@ -69,6 +91,7 @@ public class CustomerActivity extends AppCompatActivity {
 
                             arrayCusList.add(customerModel);
                         }
+                        filteredList = arrayCusList;
                     }
                     else{
 
@@ -80,8 +103,10 @@ public class CustomerActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        customerrAdapter = new CustomerrAdapter(CustomerActivity.this,arrayCusList);
+                        customerrAdapter = new CustomerrAdapter(CustomerActivity.this,filteredList);
                         customerList.setAdapter(customerrAdapter);
+                        customerList.setTextFilterEnabled(true);
+                        setupSearchView();
                     }
                 });
             }
@@ -93,5 +118,24 @@ public class CustomerActivity extends AppCompatActivity {
         }
     }
 
-}
+    private void setupSearchView() {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setSubmitButtonEnabled(false);
+        mSearchView.setQueryHint("Search Here");
+    }
 
+
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            customerList.clearTextFilter();
+        } else {
+            customerList.setFilterText(newText);
+        }
+        return true;
+    }
+
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+}

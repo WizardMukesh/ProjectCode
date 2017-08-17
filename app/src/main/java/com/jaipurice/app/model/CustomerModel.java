@@ -1,4 +1,4 @@
-package com.jaipurice.app.Model;
+package com.jaipurice.app.model;
 
 /**
  * Created by Nishant on 8/12/2017.

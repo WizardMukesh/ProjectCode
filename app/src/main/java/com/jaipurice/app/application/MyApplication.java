@@ -70,10 +70,10 @@ public class MyApplication extends Application {
 
     }
 
-    public static void showInternetUnavailableDialog(final Activity activity){
+    public static void alertDialog(final Activity activity, String msg, String titile){
         AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-        adb.setMessage("No Internet Connection Found!");
-        adb.setTitle("Network Error");
+        adb.setMessage(msg);
+        adb.setTitle(titile);
         adb.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

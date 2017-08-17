@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:weightSum="1"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar" />
+
+    <ListView
+        android:id="@+id/listCartItems"
+        android:layout_width="match_parent"
+        android:layout_weight="0.68"
+        android:layout_height="0dp">
+    </ListView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0.33"
+        android:orientation="vertical"
+        android:weightSum="7"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:text="Total Amount :"
+                android:layout_weight="0.7"/>
+            <TextView
+                android:id="@+id/textCartTotalAmount"
+                android:layout_width="0dp"
+                android:textColor="@color/colorAccent"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:text="Tax 1 :"
+                android:layout_weight="0.7"/>
+            <TextView
+                android:id="@+id/textTax1"
+                android:layout_width="0dp"
+                android:text="+2.5%"
+                android:textColor="@color/colorAccent"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:text="Tax 2 :"
+                android:layout_weight="0.7"/>
+            <TextView
+                android:id="@+id/textTax2"
+                android:layout_width="0dp"
+                android:text="+2.5%"
+                android:textColor="@color/colorAccent"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:text="Discount :"
+                android:layout_weight="0.7"/>
+            <TextView
+                android:id="@+id/textCartTotalDiscount"
+                android:layout_width="0dp"
+                android:text="-10"
+                android:textColor="@color/colorAccent"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="0dp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:text="Net Payable Amount :"
+                android:textStyle="bold"
+                android:layout_weight="0.7"/>
+            <TextView
+                android:id="@+id/textCartNetAmount"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:gravity="center_vertical|right"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCheckout"
+            android:text="CheckOut"
+            android:background="@color/colorPrimaryDark"
+            android:layout_marginLeft="50dp"
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"/>
+    </LinearLayout>
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="There Are No Items In Your Cart"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/textEmptyList"
+        />
+</LinearLayout>
