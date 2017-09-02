@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jaipurice.app.activity.LoginActivity;
 import com.jaipurice.app.application.MyApplication;
@@ -118,6 +119,40 @@ public class WebServiceHandler {
         }
     }
 
+    public void postJson(String url, String builder) throws IOException {
+        if (MyApplication.isConnectingToInternet()) {
+            progressDialog.show();
+            Log.e("POSTURL", url);
+            RequestBody requestbody = RequestBody.create(JSON, builder);
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestbody)
+                    .build();
+
+
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    serviceListener.onResponse(response.body().string());
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e("ERROR", e.toString());
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+
+                }
+
+
+            });
+        }else{
+            MyApplication.alertDialog((Activity) context,"No Internet Connection Found!","Network Error");
+        }
+    }
+
     public static FormBody.Builder createBuilder(String [] paramsName, String [] paramsValue){
         FormBody.Builder builder=new FormBody.Builder();
         Log.e("kuch", "createBuilder: "+paramsName.toString() );
@@ -131,8 +166,4 @@ public class WebServiceHandler {
         return builder;
     }
 
-
 }
-
-
-

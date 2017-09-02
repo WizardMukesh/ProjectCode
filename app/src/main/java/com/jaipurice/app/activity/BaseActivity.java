@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import com.jaipurice.app.R;
 import com.jaipurice.app.utils.SharedPreferenceUtility;
 
+import java.io.IOException;
+
 /**
  * Created by SoNu on 8/12/2017.
  */
@@ -85,5 +87,30 @@ public abstract class BaseActivity extends AppCompatActivity {
         adb.show();
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("destroyed","destr");
+/*
+        if(ConnectionActivity.mBluetoothSocket!=null) {
+            try {
+                if (ConnectionActivity.mBluetoothSocket.getInputStream() != null) {
+                        ConnectionActivity.mBluetoothSocket.getInputStream().close();
+                }
+
+                if (ConnectionActivity.mBluetoothSocket.getOutputStream() != null) {
+                        ConnectionActivity.mBluetoothSocket.getOutputStream().close();
+                }
+
+                if (ConnectionActivity.mBluetoothSocket != null) {
+                        ConnectionActivity.mBluetoothSocket.close();
+                }
+            }
+            catch (IOException e){Log.e("LODA","bhosa");}
+        }
+*/
+    }
+
 
 }

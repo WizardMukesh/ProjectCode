@@ -13,6 +13,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Created by paras on 12/28/2016.
  */
@@ -83,4 +86,12 @@ public class MyApplication extends Application {
         adb.show();
 
     }
+
+    public static float roundUp(float value, int roundAfterDecimal) {
+        BigDecimal totaalAmt 		= new BigDecimal(value);
+        BigDecimal strtotaalAmt 	= totaalAmt.setScale(roundAfterDecimal, RoundingMode.HALF_UP);
+        float roundedValue = Float.parseFloat(String.valueOf(strtotaalAmt));
+        return roundedValue;
+    }
+
 }

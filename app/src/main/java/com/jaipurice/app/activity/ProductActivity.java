@@ -91,6 +91,7 @@ public class ProductActivity extends BaseActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     String itemId = jsonObject.getString("id");
+                                    String item = jsonObject.getString("item");
                                     String itemName = jsonObject.getString("item_name");
                                     String price = jsonObject.getString("item_price");
                                     String itemImage = jsonObject.getString("item_image");
@@ -102,7 +103,8 @@ public class ProductActivity extends BaseActivity {
                                     product.setItemImageURL(itemImage);
                                     product.setEmpTotalItemsQty(Integer.parseInt(jsonObject.optString("quantity")));
                                     product.setUserSelectedQty(0);
-
+                                    product.setHsnCode(jsonObject.getString("hsn_code"));
+                                    product.setItem(item);
                                     productArrayList.add(product);
                                 }
                             }

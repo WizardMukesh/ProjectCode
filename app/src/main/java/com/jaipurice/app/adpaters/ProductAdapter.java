@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.jaipurice.app.R;
 import com.jaipurice.app.application.MyApplication;
 import com.jaipurice.app.model.Product;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         return productArrayList.size();
     }
     private class ViewHolder {
-        TextView textProductPrice, textProductName, textProductQty;
+        TextView textProductPrice, textProductName, textProductQty, textRemainingPkt;
         ImageView imageProduct;
         LinearLayout layoutIncrease, layoutDecrease;
         RelativeLayout layoutAddToCart;
@@ -58,6 +59,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             viewHolder.textProductPrice = (TextView) convertView.findViewById(R.id.product_price_pay);
             viewHolder.textProductName = (TextView) convertView.findViewById(R.id.product_name);
             viewHolder.textProductQty = (TextView) convertView.findViewById(R.id.text_quantity);
+            viewHolder.textRemainingPkt = (TextView) convertView.findViewById(R.id.textRemainingPkt);
             viewHolder.imageProduct = (ImageView) convertView.findViewById(R.id.product_thumb);
             viewHolder.layoutIncrease = (LinearLayout) convertView.findViewById(R.id.btn_increase);
             viewHolder.layoutDecrease = (LinearLayout) convertView.findViewById(R.id.btn_decrease);
@@ -71,8 +73,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         viewHolder.textProductPrice.setText(productArrayList.get(position).getItemPrice());
         viewHolder.textProductName.setText(productArrayList.get(position).getItemName());
         viewHolder.textProductQty.setText(productArrayList.get(position).getUserSelectedQty()+"");
+        viewHolder.textRemainingPkt.setText("Available Pkts - "+productArrayList.get(position).getEmpTotalItemsQty());
 
-        //Picasso.with(context).load(productArrayList.get(position).getItemImageURL()).error(android.R.drawable.stat_notify_error).into(viewHolder.imageProduct);
+        Picasso.with(context).load(productArrayList.get(position).getItemImageURL()).error(android.R.drawable.stat_notify_error).into(viewHolder.imageProduct);
 
         viewHolder.layoutIncrease.setOnClickListener(new View.OnClickListener() {
             @Override

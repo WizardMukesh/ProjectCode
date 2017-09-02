@@ -20,6 +20,9 @@ import android.widget.TextView;
 import com.jaipurice.app.R;
 import com.jaipurice.app.application.MyApplication;
 import com.jaipurice.app.model.Product;
+import com.jaipurice.app.utils.Constants;
+import com.jaipurice.app.utils.SharedPreferenceUtility;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,9 @@ public class CartAdapter extends ArrayAdapter<Product> {
     private ArrayList<Product> productArrayList;
     private ViewHolder viewHolder;
     private TextView textCartTotalAmount, textTax1, textTax2, textCartTotalDiscount, textCartNetAmount;
+    public static float serviceTax, discount, singleTax;
+    public static int totalNumProducts, totalNumQty;
+    public static String taxableAmount;
 
     public CartAdapter(Context context, int resourceId, ArrayList<Product> productArrayList) {
         super(context, resourceId);
@@ -36,6 +42,8 @@ public class CartAdapter extends ArrayAdapter<Product> {
         this.productArrayList = productArrayList;
         this.context = context;
         this.resourceId = resourceId;
+        totalNumProducts = 0;
+        totalNumQty=0;
     }
     @Override
     public int getCount() {
@@ -80,7 +88,7 @@ public class CartAdapter extends ArrayAdapter<Product> {
         int payableAmount = productArrayList.get(position).getUserSelectedQty() * Integer.parseInt(productArrayList.get(position).getItemPrice());
         viewHolder.textPayablePrice.setText(payableAmount+"");
 
-        //Picasso.with(context).load(productArrayList.get(position).getItemImageURL()).error(android.R.drawable.stat_notify_error).into(viewHolder.imageProduct);
+        Picasso.with(context).load(productArrayList.get(position).getItemImageURL()).error(android.R.drawable.stat_notify_error).into(viewHolder.imageProduct);
 
         viewHolder.layoutIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +128,12 @@ public class CartAdapter extends ArrayAdapter<Product> {
 
     public void refreshBottomViews(TextView textCartTotalAmount, TextView textTax1, TextView textTax2, TextView textCartTotalDiscount, TextView textCartNetAmount) {
         float totalPrice = 0;
-        float totalPriceWithTax;
         float totalPriceWithDiscount;
+        float totalPriceWithTax;
+
+        float tax = SharedPreferenceUtility.getInstance().get(Constants.PREF_TAX,0f) *2;
+        float discount = SharedPreferenceUtility.getInstance().get(Constants.PREF_DISCOUNT);
+
         if(this.textCartTotalAmount==null) {
             this.textCartTotalAmount = textCartTotalAmount;
             this.textTax1 = textTax1;
@@ -130,17 +142,27 @@ public class CartAdapter extends ArrayAdapter<Product> {
             this.textCartNetAmount = textCartNetAmount;
         }
 
+        totalNumProducts = productArrayList.size();
         for (int i = 0; i < productArrayList.size(); i++) {
             int productTotal = Integer.parseInt(productArrayList.get(i).getItemPrice()) * productArrayList.get(i).getUserSelectedQty();
             totalPrice = totalPrice + productTotal;
+            totalNumQty = totalNumQty + productArrayList.get(i).getUserSelectedQty();
         }
 
-        totalPriceWithTax = (totalPrice * 5)/100 + totalPrice;
+        this.discount = MyApplication.roundUp((totalPrice * discount)/100, 2);
 
-        totalPriceWithDiscount = totalPriceWithTax - 10;
+        totalPriceWithDiscount = totalPrice - this.discount;
+        taxableAmount = totalPriceWithDiscount + "";
+
+        serviceTax = (totalPriceWithDiscount * tax)/100;
+
+        totalPriceWithTax = serviceTax + totalPriceWithDiscount;
+
+        serviceTax = MyApplication.roundUp(serviceTax, 2);
+        singleTax = MyApplication.roundUp(serviceTax/2,2);
 
         textCartTotalAmount.setText(totalPrice+"");
-        textCartNetAmount.setText(totalPriceWithDiscount+"");
+        textCartNetAmount.setText(MyApplication.roundUp(totalPriceWithTax,2)+"");
     }
 
     private void alertDialog(final Activity activity, String msg, String titile, final int position){

@@ -9,13 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.jaipurice.app.adpaters.ProductAdapter;
 import com.jaipurice.app.model.CustomerModel;
 import com.jaipurice.app.R;
 import com.jaipurice.app.adpaters.CustomerrAdapter;
-import com.jaipurice.app.model.Product;
 import com.jaipurice.app.utils.Constants;
-import com.jaipurice.app.utils.SharedPreferenceUtility;
 import com.jaipurice.app.webservice.WebServiceHandler;
 import com.jaipurice.app.webservice.WebServiceListener;
 
@@ -37,7 +34,7 @@ public class CustomerActivity extends BaseActivity implements SearchView.OnQuery
     private String TAG = this.getClass().getName();
     private SearchView mSearchView;
     private ArrayList<CustomerModel>filteredList;
-    public static String customerId="1";
+    public static String customerId="1", gstNumber, customerName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,8 @@ public class CustomerActivity extends BaseActivity implements SearchView.OnQuery
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("name",filteredList.get(position).getCustomerName());
                 customerId = filteredList.get(position).getCustomerID();
+                customerName = filteredList.get(position).getCustomerName();
+                gstNumber = filteredList.get(position).getGstNumber();
                 startActivity(new Intent(CustomerActivity.this, ProductActivity.class));
             }
         });
@@ -72,7 +71,7 @@ public class CustomerActivity extends BaseActivity implements SearchView.OnQuery
                 Log.e(TAG,response);
                 JSONObject jsonObj = null;
                 try {
-                    if(new JSONObject(response).getString("status_code").equals("1"))
+                    if(new JSONObject(response).getInt("status_code")==1)
                     {
                         jsonObj = new JSONObject(response);
                         JSONArray jsonArray = jsonObj.getJSONArray("details");
@@ -80,14 +79,22 @@ public class CustomerActivity extends BaseActivity implements SearchView.OnQuery
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String cusID = jsonObject.getString("id");
                             String cusName = jsonObject.getString("name");
-                            String cusContactNO = jsonObject.getString("contact_number");
-                            String cusImage = jsonObject.getString("photo");
+                            String contactPerson = jsonObject.getString("contact_person");
+                            String phoneNumber = jsonObject.getString("phone_number");
+                            String mobileNumber = jsonObject.getString("mobile_number");
+                            String area = jsonObject.getString("area");
+                            String address = jsonObject.getString("address");
+                            String gstNumber = jsonObject.getString("GST_number");
 
                             CustomerModel customerModel = new CustomerModel();
                             customerModel.setCustomerID(cusID);
                             customerModel.setCustomerName(cusName);
-                            customerModel.setCustomerPhone(cusContactNO);
-                            customerModel.setCustomerPhoto(cusImage);
+                            customerModel.setCustomerContactPerson(contactPerson);
+                            customerModel.setPhoneNumber(phoneNumber);
+                            customerModel.setMobileNumber(mobileNumber);
+                            customerModel.setArea(area);
+                            customerModel.setAddress(address);
+                            customerModel.setGstNumber(gstNumber);
 
                             arrayCusList.add(customerModel);
                         }

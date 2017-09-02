@@ -52,7 +52,7 @@ public class CustomerrAdapter extends BaseAdapter implements Filterable {
             holder = new ViewHolder();
             holder.customer_name= (TextView) row.findViewById(R.id.customer_name);
             holder.customer_phone_no= (TextView) row.findViewById(R.id.customer_number);
-            holder.imageView_user= (CircleImageView) row.findViewById(R.id.imageView_user);
+            holder.textAddress= (TextView) row.findViewById(R.id.customer_address);
             row.setTag(holder);
 
         } else {
@@ -65,16 +65,17 @@ public class CustomerrAdapter extends BaseAdapter implements Filterable {
         else {
             holder.customer_name.setText("N/A");
         }
-        if (item.getCustomerPhone() != null) {
-            holder.customer_phone_no.setText(item.getCustomerPhone());
+        if (item.getCustomerContactPerson() != null) {
+            holder.customer_phone_no.setText(item.getCustomerContactPerson());
         }
         else {
             holder.customer_phone_no.setText("N/A");
         }
 
-        Picasso.with(mContext).load(item.getCustomerPhoto()).error(R.drawable.avtar).into(holder.imageView_user);
+        holder.textAddress.setText(item.getAddress());
 
-        Log.e("getView: ","http://lamigraapp.com/icealert/"+item.getCustomerPhone());
+
+        Log.e("getView: ","http://lamigraapp.com/icealert/"+item.getCustomerContactPerson());
 
 
         return row;
@@ -134,8 +135,7 @@ public class CustomerrAdapter extends BaseAdapter implements Filterable {
     }
 
     class ViewHolder {
-        TextView customer_name,customer_phone_no;
-        ImageView imageView_user;
+        TextView customer_name,customer_phone_no, textAddress;
 
     }
 }

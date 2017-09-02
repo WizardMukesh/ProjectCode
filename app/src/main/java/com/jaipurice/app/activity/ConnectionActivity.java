@@ -46,6 +46,7 @@ public class ConnectionActivity extends AppCompatActivity implements Runnable {
 
         scan();
 
+/*
         ((ImageView) findViewById(R.id.image)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +54,7 @@ public class ConnectionActivity extends AppCompatActivity implements Runnable {
                 finish();
             }
         });
+*/
     }
 
     private void scan() {
@@ -150,6 +152,8 @@ public class ConnectionActivity extends AppCompatActivity implements Runnable {
         public void handleMessage(Message msg) {
             mBluetoothConnectProgressDialog.dismiss();
             Toast.makeText(ConnectionActivity.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ConnectionActivity.this, CustomerActivity.class));
+            finish();
         }
     };
 

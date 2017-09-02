@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class Product implements Serializable {
-    private String itemId, itemName, itemPrice, itemImageURL;
+    private String itemId, itemName, itemPrice, itemImageURL, hsnCode, item;
     private int empTotalItemsQty, userSelectedQty;
 
     public String getItemId() {
@@ -56,5 +56,21 @@ public class Product implements Serializable {
 
     public void setUserSelectedQty(int userSelectedQty) {
         this.userSelectedQty = userSelectedQty;
+    }
+
+    public String getHsnCode() {
+        return hsnCode;
+    }
+
+    public void setHsnCode(String hsnCode) {
+        this.hsnCode = hsnCode;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
     }
 }
